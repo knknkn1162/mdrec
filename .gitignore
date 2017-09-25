@@ -1,0 +1,17 @@
+ipynb_checkpoints/
+store/csv/workspace_whole_*
+tests/pickle/
+out/
+venv/
+__pycache__/
+.idea/
+notebook/script/
+.DS_Store
+store/pickle/*
+src/bicycle.egg-info
+store/csv/whole.csv
+store/csv/id*.csv
+log/*
+store/csv/*/*
+notebook/
+tests/log
