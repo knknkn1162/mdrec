@@ -127,12 +127,6 @@ class MDRec():
         return writer.stream.getvalue()
 
     """convert markdown file to html"""
-    def to_html(self, *,
-                username=None, password=None, render_inline=True, title=None):
-        if [username, password] == [None, None]:
-            logger.warning(
-                "you may fail to convert {} to html because of rate limiting of github API..".format(self.path)
-            )
-        grip.export(self.path,
-                    username=username, password=password, title=title, render_inline=render_inline)
+    def to_html(self, *, render_inline=True, title=None):
+        grip.export(self.path, title=title, render_inline=render_inline)
 
