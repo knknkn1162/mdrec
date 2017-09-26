@@ -7,7 +7,6 @@ from pathlib import Path
 from IPython.display import display_markdown  # show とか、 record_md など使える
 
 from collections.abc import Iterable
-from misc import src2base64
 import logging
 import shutil
 
@@ -32,8 +31,7 @@ class MDRec():
         str : as it is
         otherwise : to str
     """
-
-    def rec(self, data, *, h=None, title=None, display_notebook=True):
+    def rec(self, data, *, h=None, title=None, display_notebook=True, numbering=False):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             res += self.df2md(data, h=h, title=title)
@@ -41,8 +39,7 @@ class MDRec():
             hmapping = ["#" * i + " "*(i>0) for i in range(7)]
             res += self._append_new_line("{}{}".format(hmapping[h or 0], data))
         elif isinstance(data, Iterable):  # except type of str
-            for d in data:
-                res += self._append_new_line("+ {}".format(d))
+            res += self.enum(data, numbering)
         else:
             res += self._append_new_line(str(data))
 
@@ -52,12 +49,25 @@ class MDRec():
         return self._save(res)
 
     """
+    if numbering:
     1. foo
     2. hoge
     3. ...
+
+    else:
+    + foo
+    + hoge
+    + ...
     """
-    def enum(self, lst):
-        pass
+    def enum(self, lst, numbering=False):
+        sign = "1." if numbering else "+"
+        lst = []
+        for elem in lst:
+            lst.append(
+                self._append_new_line("{} {}".format(sign, elem))
+            )
+
+        return "".join(lst)
 
     def img2md(self, src, *, alt=None, title=None):
         src_path = Path(src)
