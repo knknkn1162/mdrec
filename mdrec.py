@@ -59,7 +59,7 @@ class MDRec():
     def enum(self, lst):
         pass
 
-    def img2md(self, src, *, alt=None, title=None, embeded=False):
+    def img2md(self, src, *, alt=None, title=None):
         src_path = Path(src)
         stem = src_path.stem
         parent = self.path.parent
@@ -74,10 +74,7 @@ class MDRec():
         alt = alt or stem
         title = title or stem
 
-        if not embeded:
-            res = '''![{}]({} "{}")'''.format(alt, dst_img_path, title)
-        else:
-            res = '''![{}]({} "{}")'''.format(alt, src2base64(src), title)
+        res = '''![{}]({} "{}")'''.format(alt, dst_img_path, title)
         return self._save(self._append_new_line(res))
 
     def quote(self, s):
@@ -130,3 +127,4 @@ class MDRec():
             )
         grip.export(self.path,
                     username=username, password=password, title=title, render_inline=render_inline)
+

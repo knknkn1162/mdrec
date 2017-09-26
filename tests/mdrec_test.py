@@ -27,14 +27,13 @@ class MDRecTests(unittest.TestCase):
 
         r.to_html()
 
-
     def test_img(self):
         save_file = "./out/test02.md"
         r = MDRec(save_file=save_file)
 
         r.quote("subsub")
 
-        r.img2md("./out/img/test01.png", embeded=False)
+        r.img2md("./out/img/test01.png")
         r.to_html()
 
 if __name__ == "__main__":
