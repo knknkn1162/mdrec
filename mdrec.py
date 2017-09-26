@@ -7,9 +7,8 @@ from pathlib import Path
 from IPython.display import display_markdown  # show とか、 record_md など使える
 
 from collections.abc import Iterable
+from misc import src2base64
 import logging
-
-from flask import url_for
 
 logger = logging.getLogger(__name__)
 
@@ -100,10 +99,6 @@ class MDRec():
             f.write(res)
         self.counter += 1
         return res
-
-    def src2base64(self, src):
-        favicon_url = url_for("static", filename='favicon.ico')
-        return self._to_data_url(favicon_url, 'image/x-icon')
 
     def _to_data_url(self, url, type):
         pass
