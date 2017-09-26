@@ -9,7 +9,6 @@ def src2base64(src):
     minetype = mimetypes.types_map[src_path.suffix]
     # detect file open-mode from minetype
     mode = "rb" if str(minetype).startswith("image") else "rt"
-
     with open(src, mode) as f:
         asset64_bytes = base64.b64encode(f.read())
     asset64_string = asset64_bytes.decode('ascii')

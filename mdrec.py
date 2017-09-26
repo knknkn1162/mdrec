@@ -9,6 +9,7 @@ from IPython.display import display_markdown  # show とか、 record_md など�
 from collections.abc import Iterable
 from misc import src2base64
 import logging
+import shutil
 
 logger = logging.getLogger(__name__)
 
@@ -18,7 +19,6 @@ class MDRec():
         self.path = Path(save_file) if save_file is not None else Path('./md/test.md')
         self.refresh = refresh
         self.counter = 0
-        self.image_dir = self.path / "img"
 
     @staticmethod
     def _append_new_line(data):
@@ -60,17 +60,28 @@ class MDRec():
         pass
 
     def img2md(self, src, *, alt=None, title=None, embeded=False):
-        alt = alt or Path(src).stem
-        title = title or Path(src).stem
+        src_path = Path(src)
+        stem = src_path.stem
+        parent = self.path.parent
+
+        # dst is on the src_dir
+        dst_img_path = Path("img") / src_path.name
+
+        src = parent / str(dst_img_path)
+
+        if src_path != src:
+            shutil.copyfile(str(src_path), str(src))
+        alt = alt or stem
+        title = title or stem
 
         if not embeded:
-            res = '''![{}]({} "{}")'''.format(alt, src, title)
+            res = '''![{}]({} "{}")'''.format(alt, dst_img_path, title)
         else:
             res = '''![{}]({} "{}")'''.format(alt, src2base64(src), title)
         return self._save(self._append_new_line(res))
 
     def quote(self, s):
-        res = "\n\n> ".join(s.split("\n"))
+        res = "\n".join(["> {}".format(t) for t in s.split("\n")])
         return self._save(self._append_new_line(res))
 
     def df2md(self, df, *,
