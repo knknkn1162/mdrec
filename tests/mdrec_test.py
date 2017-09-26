@@ -28,5 +28,13 @@ class MDRecTests(unittest.TestCase):
         r.to_html()
 
 
+    def test_img(self):
+        save_file = "./out/test.md"
+        r = MDRec(save_file=save_file)
+
+        r.img2md("./out/img/test01.png", embeded=True)
+
+        r.to_html()
+
 if __name__ == "__main__":
     unittest.main()
