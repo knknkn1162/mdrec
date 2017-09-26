@@ -87,10 +87,7 @@ class MDRec():
         res = '''![{}]({} "{}")'''.format(alt, dst_img_path, title)
         return self._save(self._append_new_line(res))
 
-    def quote(self, s):
-        res = "\n".join(["> {}".format(t) for t in s.split("\n")])
-        return self._save(self._append_new_line(res))
-
+    """convert dataframe to markdown using pytablewriter module"""
     def df2md(self, df, *,
               h=None, title=None):
 
@@ -129,6 +126,7 @@ class MDRec():
         writer.write_table()
         return writer.stream.getvalue()
 
+    """convert markdown file to html"""
     def to_html(self, *,
                 username=None, password=None, render_inline=True, title=None):
         if [username, password] == [None, None]:
