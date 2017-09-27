@@ -15,18 +15,20 @@ r.rec("test", h=1)
 
 msg = "teststeststests"
 r.rec(msg)
-iterable_obj = ["bbbi", "ddn", 3]
 
-# you can select whether numbering or not
+
+# you can select whether itemize or enumerate by numbering option. By default, numbering=False.
+iterable_obj = ["bbbi", "ddn", 3]
 r.rec(iterable_obj)
 
+# insert image.
 r.img2md(src="./out/img/test01.png")
 
-# display_test
+# you can display dataframe object with table. 
 df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
 r.rec(df, title="sample")
 
-# export markdown => html using grip, https://github.com/joeyespo/grip
+# export markdown to html.
 r.to_html()
 ```
 
