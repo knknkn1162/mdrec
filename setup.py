@@ -8,7 +8,7 @@ install_requires = [
     ]
 
 setup(name='mdrec',
-      version='0.1',
+      version='0.1dev',
       description='record python object in markdown file & convert to html.',
       packages=find_packages("mdrec"),
       include_package_data=True,
