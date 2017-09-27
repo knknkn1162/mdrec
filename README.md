@@ -1,7 +1,11 @@
-# MDRec Markdown Recorder from python
+# MDRec : Markdown Recorder from python
+
+Create markdown file from python object.
+You can also convert this to html file.
 
 ## Installation
 
+I'm getting it ready now:)
 
 
 ## Example
@@ -35,3 +39,7 @@ r.to_html()
 ## Usage
 
 + By default, results are also displayed in jupyter notebook, so if you switch off the option, let `r.rec(obj, display_notebook=False)`.
+
+## Configuration
+
++ If you use `MDRec.to_html`, note that this call [Grip](https://github.com/joeyespo/grip) implicitly. To set username and password, see the link, https://github.com/joeyespo/grip#configuration.
