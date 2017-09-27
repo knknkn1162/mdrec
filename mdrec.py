@@ -21,7 +21,7 @@ class MDRec():
 
     @staticmethod
     def _append_new_line(data):
-        return data + "\n\n"
+        return data + "\n"
 
     """
     depending on type of data argument, change output.

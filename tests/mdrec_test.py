@@ -10,7 +10,7 @@ class MDRecTests(unittest.TestCase):
         r = MDRec(save_file=save_file)
 
         res = r.rec("test", h=1)
-        newline = "\n\n"
+        newline = "\n"
         self.assertEqual(res, "# test"+newline)
 
         msg = "teststeststests"
@@ -31,10 +31,15 @@ class MDRecTests(unittest.TestCase):
         save_file = "./out/test02.md"
         r = MDRec(save_file=save_file)
 
-        r.quote("subsub")
-
         r.img2md("./out/img/test01.png")
         r.to_html()
+
+
+    def test_enum(self):
+        r = MDRec()
+        d = r.enum([1, 2, 3])
+
+        self.assertEqual(d, "+ 1\n+ 2\n+ 3\n")
 
 if __name__ == "__main__":
     unittest.main()
