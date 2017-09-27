@@ -19,6 +19,13 @@ class MDRecTests(unittest.TestCase):
         # Note that this writes file in the save_file path
         self.assertEqual(res, '''![sample](img/test01.png "test")\n\n''')
 
+    def test_img2(self):
+        save_file = "./out/test.md"
+        r = MDRec(save_file=save_file)
+        res = r.img(src="../test02.png", title="test", alt="sample")
+        # Note that this writes file in the save_file path
+        self.assertEqual(res, '''![sample](img/test02.png "test")\n\n''')
+
     def test_table(self):
         df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
         res = MDRec.table(df, title="sample")
