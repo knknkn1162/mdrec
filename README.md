@@ -5,8 +5,9 @@ You can also convert this to html file.
 
 ## Installation
 
-I'm getting it ready now:)
-
+```bash
+pip install -e git+ssh://git@github.com/knknkn1162/mdrec.git@dev_seed#egg=mdrec-0.1dev
+```
 
 ## Example
 
