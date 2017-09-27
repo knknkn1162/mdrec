@@ -4,42 +4,35 @@ from mdrec import MDRec
 
 class MDRecTests(unittest.TestCase):
 
-    def test_rec(self):
-
-        save_file = "./out/test.md"
-        r = MDRec(save_file=save_file)
-
-        res = r.rec("test", h=1)
-        newline = "\n"
-        self.assertEqual(res, "# test"+newline)
-
-        msg = "teststeststests"
-        res = r.rec(msg)
-        self.assertEqual(res, msg + newline)
-
-        res = r.rec(["bbbi", "ddn", 3])
-        self.assertEqual(res, "+ bbbi{}+ ddn{}+ 3{}".format(newline, newline, newline))
-
-        r.img2md(src="./out/img/test01.png")
-        # display_test
-        df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
-        r.rec(df, title="sample")
-
-        r.to_html()
-
-    def test_img(self):
-        save_file = "./out/test02.md"
-        r = MDRec(save_file=save_file)
-
-        r.img2md("./out/img/test01.png")
-        r.to_html()
-
+    def test_hedding(self):
+        res = MDRec.heading("test", h=2)
+        self.assertEqual(res, "## test\n\n")
 
     def test_enum(self):
-        r = MDRec()
-        d = r.enum([1, 2, 3])
+        res = MDRec.enum([1,2,3], numbering=True)
+        self.assertEqual(res, "1. 1\n1. 2\n1. 3\n\n")
 
-        self.assertEqual(d, "+ 1\n+ 2\n+ 3\n")
+    def test_img(self):
+        save_file = "./out/test.md"
+        r = MDRec(save_file=save_file)
+        res = r.img(src="./out/img/test01.png", title="test", alt="sample")
+        # Note that this writes file in the save_file path
+        self.assertEqual(res, '''![sample](img/test01.png "test")\n\n''')
+
+    def test_table(self):
+        df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
+        res = MDRec.table(df, title="sample")
+        self.assertEqual(res, df_md_sample)
+
+df_md_sample = \
+"""## sample
+|   |  a  |  b  |  c  |  d  |
+|---|----:|----:|----:|----:|
+|AB |   12|    2|    4|    3|
+|BB |    3|    3|    3|    4|
+
+
+"""
 
 if __name__ == "__main__":
     unittest.main()
