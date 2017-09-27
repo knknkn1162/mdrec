@@ -4,6 +4,7 @@ install_requires = [
     "pandas",
     "grip",
     "pytablewriter",
+    "ipython",
     ]
 
 setup(name='mdrec',
