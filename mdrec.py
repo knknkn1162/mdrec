@@ -61,13 +61,13 @@ class MDRec():
     """
     def enum(self, lst, numbering=False):
         sign = "1." if numbering else "+"
-        lst = []
+        res = []
         for elem in lst:
-            lst.append(
+            res.append(
                 self._append_new_line("{} {}".format(sign, elem))
             )
 
-        return "".join(lst)
+        return "".join(res)
 
     def img2md(self, src, *, alt=None, title=None):
         src_path = Path(src)
