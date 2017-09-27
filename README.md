@@ -17,10 +17,8 @@ r = MDRec(save_file=save_file)
 
 # write `# test` in save_file. 
 r.rec("test", h=1)
-
-msg = "teststeststests"
-r.rec(msg)
-
+# plain text
+r.rec("teststeststests")
 
 # you can select whether itemize or enumerate by numbering option. By default, numbering=False.
 iterable_obj = ["bbbi", "ddn", 3]
@@ -43,4 +41,4 @@ r.to_html()
 
 ## Configuration
 
-+ If you use `MDRec.to_html`, note that this call [Grip](https://github.com/joeyespo/grip) implicitly. To set username and password, see the link, https://github.com/joeyespo/grip#configuration.
++ If you use `MDRec.to_html`, note that this call [Grip](https://github.com/joeyespo/grip) and github API implicitly. To set github username and password, see the link, https://github.com/joeyespo/grip#configuration.
