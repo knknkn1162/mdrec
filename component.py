@@ -57,12 +57,12 @@ def _end(data):
     return data + "\n\n"
 
 """generate markdown formatted img expression"""
-def img(src, md_path, *, alt=None, title=None, img_dir = "img", ignore=False):
+def img(src, md_file, *, alt=None, title=None, img_dir = "img", ignore=False):
     src_path = Path(src) #img
 
     # dst is on the src_dir
     rel_img_dir = Path(img_dir)
-    md_path = Path(md_path)
+    md_path = Path(md_file)
 
     dst_dir = md_path.parent / rel_img_dir
     dst_path = dst_dir / src_path.name
