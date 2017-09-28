@@ -1,6 +1,6 @@
 import component
 import unittest
-from sample_data import df_md_sample, nested_sample
+from sample import df_md_sample, nested_sample
 
 
 class ComponentTests(unittest.TestCase):

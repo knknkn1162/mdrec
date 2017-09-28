@@ -47,6 +47,7 @@ class MDRec():
     def img(self, src, *, alt=None, title=None, ignore=False):
         return self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
 
+    """write horizontal line in the save_file"""
     def horizontal(self):
         return self._save(component.horizontal())
 
