@@ -32,7 +32,7 @@ class MDRec():
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             res += component.table(data, h=h, title=title)
         elif isinstance(data, str):
-            component.heading(data, h=h)
+            res += component.heading(data, h=h)
         elif isinstance(data, Iterable):  # except type of str
             res += component.enum(data, numbering)
         else:
