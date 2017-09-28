@@ -1,4 +1,4 @@
-import six, grip
+import grip
 
 import component
 from pandas import DataFrame, Series
@@ -8,7 +8,7 @@ from IPython.display import display_markdown  # show とか、 record_md など�
 
 from collections.abc import Iterable
 import logging
-import shutil, uuid
+import uuid
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class MDRec():
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             res += component.table(data, h=h, title=title)
         elif isinstance(data, str):
-            component.heading(data, h=h)
+            res += component.heading(data, h=h)
         elif isinstance(data, Iterable):  # except type of str
             res += component.enum(data, numbering)
         else:
@@ -48,8 +48,8 @@ class MDRec():
         return self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
 
     """write horizontal line in the save_file"""
-    def horizontal(self):
-        return self._save(component.horizontal())
+    def line(self):
+        return self._save(component.line())
 
     """convert markdown file to html"""
     def export_html(self, *, render_inline=True, title=None):
