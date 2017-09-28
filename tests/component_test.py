@@ -12,6 +12,10 @@ class ComponentTests(unittest.TestCase):
         res = component.enum([1,2,3], numbering=True)
         self.assertEqual(res, "1. 1\n1. 2\n1. 3\n\n")
 
+    def test_link(self):
+        res = component.link("testtest", "http://google.com", newline=False)
+        self.assertEqual(res, "[testtest](http://google.com)")
+
     def test_horizontal(self):
         res = component.horizontal()
         self.assertEqual(res, "---\n\n")

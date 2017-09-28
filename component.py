@@ -77,3 +77,9 @@ def img(src, md_file, *, alt=None, title=None, img_dir = "img", ignore=False):
 
     res = '''![{}]({} "{}")'''.format(alt, rel_img_dir / src_path.name, title)
     return _end(res)
+
+
+"""generate link"""
+def link(text, path, *, newline=True):
+    res = '''[{}]({})'''.format(text, path)
+    return _end(res) if newline else res
