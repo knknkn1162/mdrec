@@ -12,6 +12,10 @@ class MDRecTests(unittest.TestCase):
         res = MDRec.enum([1,2,3], numbering=True)
         self.assertEqual(res, "1. 1\n1. 2\n1. 3\n\n")
 
+    def test_horizontal(self):
+        res = MDRec.horizontal()
+        self.assertEqual(res, "---\n\n")
+
     def test_img(self):
         save_file = "./out/test_img.md"
         r = MDRec(save_file=save_file)
