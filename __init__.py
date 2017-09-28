@@ -1,1 +1,1 @@
-__all__ = ["mdrec", "misc"]
+__all__ = ["mdrec", "component"]
