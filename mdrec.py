@@ -48,8 +48,8 @@ class MDRec():
         return self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
 
     """write horizontal line in the save_file"""
-    def horizontal(self):
-        return self._save(component.horizontal())
+    def line(self):
+        return self._save(component.line())
 
     """convert markdown file to html"""
     def export_html(self, *, render_inline=True, title=None):

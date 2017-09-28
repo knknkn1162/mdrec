@@ -5,7 +5,7 @@ import shutil
 from collections.abc import Mapping, Iterable
 
 """draw horizontal line"""
-def horizontal():
+def line():
     return _end("---")
 
 """
