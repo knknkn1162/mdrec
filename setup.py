@@ -5,6 +5,7 @@ install_requires = [
     "grip",
     "pytablewriter",
     "ipython",
+    "pyyaml",
     ]
 
 setup(name='mdrec',
