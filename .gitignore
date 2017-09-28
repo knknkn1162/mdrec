@@ -16,4 +16,5 @@ store/csv/*/*
 notebook/
 tests/log
 tests/out/
+tests/_cache*.md
 
