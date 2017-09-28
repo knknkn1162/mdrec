@@ -10,15 +10,15 @@ class ComponentTests(unittest.TestCase):
         self.assertEqual(res, "## test\n\n")
 
     def test_enum_list(self):
-        res = component.enum([1,2,3], numbering=True)
-        self.assertEqual(res, "1. 1\n1. 2\n1. 3\n\n")
+        res = component.enum([1,2,3])
+        self.assertEqual(res, "- 1\n- 2\n- 3\n\n")
 
     def test_enum_dict(self):
         res = component.enum({"a" : 1, "b" : 2})
-        self.assertEqual(res, "+ a : 1\n+ b : 2\n\n")
+        self.assertEqual(res, "- a: 1\n  b: 2\n\n")
 
     def test_enum_nested(self):
-        obj = [1,[1,2],[2,[3],4], {"a": 100, "b": 234}]
+        obj = [1,[1,2],[2,[3],4], [{"a": 100, "b": 234}], {"c" : [3,4,5]}]
         res = component.enum(obj)
         self.assertEqual(res, nested_sample)
 
