@@ -27,14 +27,14 @@ class MDRec():
         str : as it is
         otherwise : to str
     """
-    def rec(self, data, *, h=None, title=None, display_notebook=True, numbering=False):
+    def rec(self, data, *, h=None, title=None, display_notebook=True):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             res += component.table(data, h=h, title=title)
         elif isinstance(data, str):
             res += component.heading(data, h=h)
         elif isinstance(data, Iterable):  # except type of str
-            res += component.enum(data, numbering)
+            res += component.enum(data)
         else:
             res += component.heading(data, h=h)
 

@@ -1,6 +1,8 @@
 import unittest
 from mdrec import MDRec
 import os
+from sample import df_md_sample, nested_sample
+
 
 class MDRecTests(unittest.TestCase):
 
@@ -10,6 +12,10 @@ class MDRecTests(unittest.TestCase):
 
         res = r.rec("testtest", h=3, display_notebook=False)
         self.assertEqual(res, "### testtest\n\n")
+
+        res = r.rec([1,[1,2],[2,[3],4], [{"a": 100, "b": 234}], {"c" : [3,4,5]}])
+
+        self.assertEqual(res, nested_sample)
 
 
     def test_img(self):
