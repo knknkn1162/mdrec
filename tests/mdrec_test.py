@@ -22,6 +22,5 @@ class MDRecTests(unittest.TestCase):
         self.assertTrue(os.path.exists("./out/test_img.html"))
 
 
-
 if __name__ == "__main__":
     unittest.main()
