@@ -1,6 +1,6 @@
 import six, grip
 
-from . import component
+import component
 from pandas import DataFrame, Series
 from pathlib import Path
 
@@ -45,7 +45,7 @@ class MDRec():
 
     """insert image in markdown file"""
     def img(self, src, *, alt=None, title=None, ignore=False):
-        return self._save(component.img(src, alt=alt, title=title, ignore=ignore))
+        return self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
 
     def horizontal(self):
         return self._save(component.horizontal())
