@@ -47,9 +47,16 @@ class MDRec():
     def rec_img(self, src, *, alt=None, title=None, ignore=False):
         return self._save(self.img(src, alt=alt, title=title, ignore=ignore))
 
+    def rec_horizontal(self):
+        return self.horizontal()
+
     """convert markdown file to html"""
     def to_html(self, *, render_inline=True, title=None):
         return grip.export(self.path, title=title, render_inline=render_inline)
+
+    @staticmethod
+    def horizontal():
+        return MDRec._end("---")
 
     """generate markdown formatted img expression"""
     def img(self, src, *, alt=None, title=None, img_dir = "img", ignore=False):
