@@ -2,7 +2,7 @@ import pytablewriter, six
 from pandas import DataFrame, Series
 from pathlib import Path
 import shutil
-
+from collections.abc import Mapping, Iterable
 
 """draw horizontal line"""
 def horizontal():
@@ -19,14 +19,9 @@ def heading(data, h):
 """
 switch itemize or enumerate with numbering argument
 """
-def enum(lst, numbering=False):
-    mark = "1." if numbering else "+"
-    res = []
-    for elem in lst:
-        res.append(
-            "{} {}".format(mark, elem))
-
-    return _end("\n".join(res))
+def enum(iter, numbering=False, depth=0):
+    lst = __inner_enum_lst(iter, [], numbering=numbering, depth=depth)
+    return _end("\n".join(lst))
 
 """convert dataframe to markdown using pytablewriter module"""
 def table(df, *, h=2, title=None):
@@ -83,3 +78,19 @@ def img(src, md_file, *, alt=None, title=None, img_dir = "img", ignore=False):
 def link(text, path, *, newline=True):
     res = '''[{}]({})'''.format(text, path)
     return _end(res) if newline else res
+
+
+def __inner_enum_lst(iter, buf, numbering=False, depth=0):
+    mark = "1." if numbering else "+"
+    prefix = "  " * depth
+
+    if isinstance(iter, Mapping):
+        for key, value in iter.items():
+            buf.append("{}{} {} : {}".format(prefix, mark, key, value))
+    else:
+        for elem in iter:
+            if isinstance(elem, Iterable) and (not isinstance(elem, six.string_types)):
+                buf = __inner_enum_lst(elem, buf, numbering=numbering, depth=depth+1)
+            else:
+                buf.append("{}{} {}".format(prefix, mark, elem))
+    return buf

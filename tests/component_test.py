@@ -1,5 +1,6 @@
 import component
 import unittest
+from sample_data import df_md_sample, nested_sample
 
 
 class ComponentTests(unittest.TestCase):
@@ -8,9 +9,18 @@ class ComponentTests(unittest.TestCase):
         res = component.heading("test", h=2)
         self.assertEqual(res, "## test\n\n")
 
-    def test_enum(self):
+    def test_enum_list(self):
         res = component.enum([1,2,3], numbering=True)
         self.assertEqual(res, "1. 1\n1. 2\n1. 3\n\n")
+
+    def test_enum_dict(self):
+        res = component.enum({"a" : 1, "b" : 2})
+        self.assertEqual(res, "+ a : 1\n+ b : 2\n\n")
+
+    def test_enum_nested(self):
+        obj = [1,[1,2],[2,[3],4], {"a": 100, "b": 234}]
+        res = component.enum(obj)
+        self.assertEqual(res, nested_sample)
 
     def test_link(self):
         res = component.link("testtest", "http://google.com", newline=False)
@@ -31,17 +41,6 @@ class ComponentTests(unittest.TestCase):
         df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
         res = component.table(df, title="sample")
         self.assertEqual(res, df_md_sample)
-
-df_md_sample = \
-"""## sample
-|   |  a  |  b  |  c  |  d  |
-|---|----:|----:|----:|----:|
-|AB |   12|    2|    4|    3|
-|BB |    3|    3|    3|    4|
-
-
-"""
-
 
 if __name__ == "__main__":
     unittest.main()
