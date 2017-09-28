@@ -1,4 +1,4 @@
-import six, grip
+import grip
 
 import component
 from pandas import DataFrame, Series
@@ -8,7 +8,7 @@ from IPython.display import display_markdown  # show とか、 record_md など�
 
 from collections.abc import Iterable
 import logging
-import shutil, uuid
+import uuid
 
 logger = logging.getLogger(__name__)
 
