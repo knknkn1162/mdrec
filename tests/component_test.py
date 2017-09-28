@@ -26,8 +26,8 @@ class ComponentTests(unittest.TestCase):
         res = component.link("testtest", "http://google.com", newline=False)
         self.assertEqual(res, "[testtest](http://google.com)")
 
-    def test_horizontal(self):
-        res = component.horizontal()
+    def test_line(self):
+        res = component.line()
         self.assertEqual(res, "---\n\n")
 
     def test_img(self):
