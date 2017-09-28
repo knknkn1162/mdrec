@@ -1,6 +1,6 @@
 import component
 import unittest
-from sample import df_md_sample, nested_sample
+from sample import df_md_sample, nested_sample, ja_sample
 
 
 class ComponentTests(unittest.TestCase):
@@ -8,6 +8,10 @@ class ComponentTests(unittest.TestCase):
     def test_hedding(self):
         res = component.heading("test", h=2)
         self.assertEqual(res, "## test\n\n")
+
+    def test_enum_ja(self):
+        res = component.enum(["あ", "い", "う", {"え" : "お"}])
+        self.assertEqual(res, ja_sample)
 
     def test_enum_list(self):
         res = component.enum([1,2,3])
