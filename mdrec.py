@@ -44,30 +44,32 @@ class MDRec():
         return self._save(res)
 
     """insert image in markdown file"""
-    def rec_img(self, src, *, alt=None, title=None):
-        return self._save(self.img(src, alt=alt, title=title))
+    def rec_img(self, src, *, alt=None, title=None, ignore=True):
+        return self._save(self.img(src, alt=alt, title=title, ignore=ignore))
 
     """convert markdown file to html"""
     def to_html(self, *, render_inline=True, title=None):
         return grip.export(self.path, title=title, render_inline=render_inline)
 
     """generate markdown formatted img expression"""
-    def img(self, src, *, alt=None, title=None):
-        src_path = Path(src)
-        stem = src_path.stem
-        parent = self.path.parent
+    def img(self, src, *, alt=None, title=None, img_dir = "img", ignore=False):
+        src_path = Path(src) #img
 
         # dst is on the src_dir
-        dst_img_path = Path("img") / src_path.name
+        rel_img_dir = Path(img_dir)
 
-        src = parent / str(dst_img_path)
+        dst_dir = self.path.parent / rel_img_dir
+        dst_path = dst_dir / src_path.name
+        self.path.parent.mkdir(exist_ok=True)
 
-        if src_path != src:
-            shutil.copyfile(str(src_path), str(src))
-        alt = alt or stem
-        title = title or stem
+        if src_path.exists() or (not ignore):
+            dst_dir.mkdir(exist_ok=True)
+            if not Path.samefile(src_path.parent, dst_path.parent):
+                shutil.copyfile(str(src_path), str(dst_path))
+        alt = alt or src_path.stem
+        title = title or src_path.stem
 
-        res = '''![{}]({} "{}")'''.format(alt, dst_img_path, title)
+        res = '''![{}]({} "{}")'''.format(alt, rel_img_dir / src_path.name, title)
         return self._end(res)
 
     @staticmethod
