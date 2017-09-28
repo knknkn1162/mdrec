@@ -1,6 +1,6 @@
 import six, grip
 
-import pytablewriter
+import component
 from pandas import DataFrame, Series
 from pathlib import Path
 
@@ -30,13 +30,13 @@ class MDRec():
     def rec(self, data, *, h=None, title=None, display_notebook=True, numbering=False):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
-            res += self.table(data, h=h, title=title)
+            res += component.table(data, h=h, title=title)
         elif isinstance(data, str):
-            self.heading(data, h=h)
+            component.heading(data, h=h)
         elif isinstance(data, Iterable):  # except type of str
-            res += self.enum(data, numbering)
+            res += component.enum(data, numbering)
         else:
-            res += self.heading(data, h=h)
+            res += component.heading(data, h=h)
 
         if display_notebook:
             display_markdown(res, raw=True)
@@ -44,85 +44,15 @@ class MDRec():
         return self._save(res)
 
     """insert image in markdown file"""
-    def rec_img(self, src, *, alt=None, title=None, ignore=False):
-        return self._save(self.img(src, alt=alt, title=title, ignore=ignore))
+    def img(self, src, *, alt=None, title=None, ignore=False):
+        return self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
 
-    def rec_horizontal(self):
-        return self.horizontal()
+    def horizontal(self):
+        return self._save(component.horizontal())
 
     """convert markdown file to html"""
-    def to_html(self, *, render_inline=True, title=None):
+    def export_html(self, *, render_inline=True, title=None):
         return grip.export(self.path, title=title, render_inline=render_inline)
-
-    @staticmethod
-    def horizontal():
-        return MDRec._end("---")
-
-    """generate markdown formatted img expression"""
-    def img(self, src, *, alt=None, title=None, img_dir = "img", ignore=False):
-        src_path = Path(src) #img
-
-        # dst is on the src_dir
-        rel_img_dir = Path(img_dir)
-
-        dst_dir = self.path.parent / rel_img_dir
-        dst_path = dst_dir / src_path.name
-        self.path.parent.mkdir(exist_ok=True)
-
-        if src_path.exists() or (not ignore):
-            dst_dir.mkdir(exist_ok=True)
-            if not Path.samefile(src_path.parent, dst_path.parent):
-                shutil.copyfile(str(src_path), str(dst_path))
-        alt = alt or src_path.stem
-        title = title or src_path.stem
-
-        res = '''![{}]({} "{}")'''.format(alt, rel_img_dir / src_path.name, title)
-        return self._end(res)
-
-    @staticmethod
-    def _end(data):
-        return data + "\n\n"
-
-    @staticmethod
-    def heading(data, h):
-        hmapping = ["#" * i + " " * (i > 0) for i in range(7)]
-        res = "{}{}".format(hmapping[h or 0], str(data))
-        return MDRec._end(res)
-
-    """
-    switch itemize or enumerate with numbering argument
-    """
-    @staticmethod
-    def enum(lst, numbering=False):
-        mark = "1." if numbering else "+"
-        res = []
-        for elem in lst:
-            res.append(
-                "{} {}".format(mark, elem))
-
-        return MDRec._end("\n".join(res))
-
-    """convert dataframe to markdown using pytablewriter module"""
-    @staticmethod
-    def table(df, *, h=2, title=None):
-        if isinstance(df, Series):
-            df = DataFrame(df)
-
-        if df.index.name is None:
-            df.index.name = ""
-        df = df.reset_index()
-
-        writer = pytablewriter.MarkdownTableWriter()
-        writer.set_indent_level(h - 1)
-        if title is not None:
-            writer.table_name = title
-
-        writer.from_dataframe(df)
-        # fitted multiple cases
-        writer.header_list = ["  {}  ".format(a) for a in df.columns]
-
-        res = MDRec._write(writer)
-        return res + "\n"
 
     def _save(self, res):
         mode = "w" if (self.counter == 0 and self.refresh == True) else "a"
@@ -130,10 +60,4 @@ class MDRec():
             f.write(res)
         self.counter += 1
         return res
-
-    @staticmethod
-    def _write(writer):
-        writer.stream = six.StringIO()
-        writer.write_table()
-        return writer.stream.getvalue()
 
