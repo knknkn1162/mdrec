@@ -44,7 +44,7 @@ class MDRec():
         return self._save(res)
 
     """insert image in markdown file"""
-    def rec_img(self, src, *, alt=None, title=None, ignore=True):
+    def rec_img(self, src, *, alt=None, title=None, ignore=False):
         return self._save(self.img(src, alt=alt, title=title, ignore=ignore))
 
     """convert markdown file to html"""
