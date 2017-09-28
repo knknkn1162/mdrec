@@ -32,16 +32,5 @@ class ComponentTests(unittest.TestCase):
         res = component.table(df, title="sample")
         self.assertEqual(res, df_md_sample)
 
-df_md_sample = \
-"""## sample
-|   |  a  |  b  |  c  |  d  |
-|---|----:|----:|----:|----:|
-|AB |   12|    2|    4|    3|
-|BB |    3|    3|    3|    4|
-
-
-"""
-
-
 if __name__ == "__main__":
     unittest.main()
