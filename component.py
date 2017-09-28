@@ -1,5 +1,7 @@
 import pytablewriter, six
 from pandas import DataFrame, Series
+from pathlib import Path
+import shutil
 
 
 """draw horizontal line"""
@@ -53,3 +55,25 @@ split prev or next sentence
 """
 def _end(data):
     return data + "\n\n"
+
+"""generate markdown formatted img expression"""
+def img(src, md_path, *, alt=None, title=None, img_dir = "img", ignore=False):
+    src_path = Path(src) #img
+
+    # dst is on the src_dir
+    rel_img_dir = Path(img_dir)
+    md_path = Path(md_path)
+
+    dst_dir = md_path.parent / rel_img_dir
+    dst_path = dst_dir / src_path.name
+    md_path.parent.mkdir(exist_ok=True)
+
+    if src_path.exists() or (not ignore):
+        dst_dir.mkdir(exist_ok=True)
+        if not Path.samefile(src_path.parent, dst_path.parent):
+            shutil.copyfile(str(src_path), str(dst_path))
+    alt = alt or src_path.stem
+    title = title or src_path.stem
+
+    res = '''![{}]({} "{}")'''.format(alt, rel_img_dir / src_path.name, title)
+    return _end(res)
