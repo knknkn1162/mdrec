@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 class MDRec():
     def __init__(self, *, save_file=None, refresh=True):
-        self.path = Path(save_file) if save_file is not None else Path('./md/{}.md'.format(uuid.uuid4()))
+        self.path = Path(save_file) if save_file is not None else Path('./_cache_{}.md'.format(uuid.uuid4()))
         self.refresh = refresh
         self.counter = 0
 
