@@ -26,7 +26,7 @@ def enum(data):
             return [dat]
         return dat
 
-    res = yaml.dump(preprocess(data), default_flow_style=False)
+    res = yaml.dump(preprocess(data), default_flow_style=False, allow_unicode=True)
     return res + "\n"
 
 """convert dataframe to markdown using pytablewriter module"""
