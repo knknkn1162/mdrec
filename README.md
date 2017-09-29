@@ -1,9 +1,11 @@
 # MDRec : Markdown Recorder from python
 
-Create markdown file from python object.
+This library creates markdown file easily from python object.
 You can also convert this to html file.
 
 ## Installation
+
++ this library is under development..
 
 ```bash
 pip install -e git+ssh://git@github.com/knknkn1162/mdrec.git@dev_seed#egg=mdrec-0.1dev
@@ -11,28 +13,108 @@ pip install -e git+ssh://git@github.com/knknkn1162/mdrec.git@dev_seed#egg=mdrec-
 
 ## Example
 
+Here is example, output result and raw_file respectively.
+
 ```python
-save_file = "./out/test.md"
+save_file = "./out/test_txt.md"
 r = MDRec(save_file=save_file)
 
-# write `# test` in save_file. 
-r.rec("test", h=1)
-# plain text
-r.rec("teststeststests")
+r.rec("testtest", h=3, display=False)
 
-# you can select whether itemize or enumerate by numbering option. By default, numbering=False.
-iterable_obj = ["bbbi", "ddn", 3]
-r.rec(iterable_obj)
+# support ja
+r.rec(["あ", "い", "う", {"え" : "お"}])
+# support nested list, dict or Iterable. 
+r.rec([1,[1,2],[2,[3],4], [{"a": 100, "b": 234}], {"c" : [3,4,5]}])
 
-# insert image.
-r.img2md(src="./out/img/test01.png")
-
-# you can display dataframe object with table. 
+from pandas import DataFrame
+# support DataFrame or Series ((NOT support list of list)
 df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
 r.rec(df, title="sample")
 
+# generate link (you can set img=True to generate images)
+r.link("./src/tes.png", text="testtest", img=False)
+
+# draw vertical line
+r.line()
+
 # export markdown to html.
 r.to_html()
+```
+
+### output
+
+run this code, you can get the markdown file below:
+
++ rendered
+
+`<start>`
+
+### testtest
+
+- あ
+- い
+- う
+- え: お
+
+- 1
+- - 1
+  - 2
+- - 2
+  - - 3
+  - 4
+- - a: 100
+    b: 234
+- c:
+  - 3
+  - 4
+  - 5
+
+## sample
+|   |  a  |  b  |  c  |  d  |
+|---|----:|----:|----:|----:|
+|AB |   12|    2|    4|    3|
+|BB |    3|    3|    3|    4|
+
+
+[testtest](./src/tes.png)
+
+---
+
+`<end>`
+
++ raw markdown file
+
+```markdown
+### testtest
+
+- あ
+- い
+- う
+- え: お
+
+- 1
+- - 1
+  - 2
+- - 2
+  - - 3
+  - 4
+- - a: 100
+    b: 234
+- c:
+  - 3
+  - 4
+  - 5
+
+## sample
+|   |  a  |  b  |  c  |  d  |
+|---|----:|----:|----:|----:|
+|AB |   12|    2|    4|    3|
+|BB |    3|    3|    3|    4|
+
+
+[testtest](./src/tes.png)
+
+---
 ```
 
 ## Usage
