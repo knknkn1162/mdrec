@@ -29,7 +29,8 @@ class MDRec():
     def rec(self, data, *, h=None, title=None, display=True):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
-            res += component.table(data, h=h, title=title)
+            default_h = 2
+            res += component.table(data, h=default_h, title=title)
         elif isinstance(data, str):
             res += component.heading(data, h=h)
         elif isinstance(data, Iterable):  # except type of str
