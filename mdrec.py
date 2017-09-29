@@ -27,7 +27,7 @@ class MDRec():
         str : as it is
         otherwise : to str
     """
-    def rec(self, data, *, h=None, title=None, display_notebook=True):
+    def rec(self, data, *, h=None, title=None, display=True):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             res += component.table(data, h=h, title=title)
@@ -38,18 +38,30 @@ class MDRec():
         else:
             res += component.heading(data, h=h)
 
-        if display_notebook:
-            display_markdown(res, raw=True)
+        self._display_md(res, display)
 
         return self._save(res)
 
     """insert image in markdown file"""
-    def img(self, src, *, alt=None, title=None, ignore=False):
-        return self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
+    def img(self, src, *, alt=None, title=None, ignore=False, display=True):
+        res = self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
+        self._display_md(res, display)
+
+        return self._save(res)
 
     """write horizontal line in the save_file"""
-    def line(self):
-        return self._save(component.line())
+    def line(self, display=True):
+        res = component.line()
+        self._display_md(res, display)
+
+        return self._save(res)
+
+    """generate link path"""
+    def link(self, text, path, *, newline=True, display=True):
+        res = component.link(text=text, path=path, newline=newline)
+        self._display_md(res, display)
+
+        return self._save(res)
 
     """convert markdown file to html"""
     def export_html(self, *, render_inline=True, title=None):
@@ -61,4 +73,9 @@ class MDRec():
             f.write(res)
         self.counter += 1
         return res
+
+    @staticmethod
+    def _display_md(data, display):
+        if display:
+            display_markdown(data, raw=True)
 

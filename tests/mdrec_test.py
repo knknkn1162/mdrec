@@ -10,7 +10,7 @@ class MDRecTests(unittest.TestCase):
         save_file = "./out/test_txt.md"
         r = MDRec(save_file=save_file)
 
-        res = r.rec("testtest", h=3, display_notebook=False)
+        res = r.rec("testtest", h=3, display=False)
         self.assertEqual(res, "### testtest\n\n")
 
         res = r.rec(["あ", "い", "う", {"え" : "お"}])
