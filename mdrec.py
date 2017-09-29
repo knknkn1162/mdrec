@@ -42,9 +42,9 @@ class MDRec():
         return self._save(res)
 
     """insert image in markdown file"""
-    def img(self, src, *, text="", title=None, copy=True, ignore=False, new_line=True, display=True):
+    def img(self, src, *, text="", title=None, copy=True, ignore=False, display=False):
         res = component.link(src=src, md_dir=self.path.parent,
-            text=text, img=True, title=title, copy=copy, ignore=ignore, new_line=new_line
+            text=text, img=True, title=title, copy=copy, ignore=ignore, new_line=True,
         )
 
         self._display_md(res, display)
