@@ -13,13 +13,15 @@ pip install -e git+ssh://git@github.com/knknkn1162/mdrec.git@dev_seed#egg=mdrec-
 
 ## Example
 
-Here is example, output result and raw_file respectively.
+Here is example code, output result and raw_file respectively.
+
+### Code
 
 ```python
 save_file = "./out/test_txt.md"
 r = MDRec(save_file=save_file)
 
-r.rec("testtest", h=3, display=False)
+r.rec("testtest", h=4, display=False)
 
 # support ja
 r.rec(["あ", "い", "う", {"え" : "お"}])
@@ -29,7 +31,7 @@ r.rec([1,[1,2],[2,[3],4], [{"a": 100, "b": 234}], {"c" : [3,4,5]}])
 from pandas import DataFrame
 # support DataFrame or Series ((NOT support list of list)
 df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
-r.rec(df, title="sample")
+r.rec(df, title="sample", h=4)
 
 # generate link (you can set img=True to generate images)
 r.link("./src/tes.png", text="testtest", img=False)
@@ -41,15 +43,11 @@ r.line()
 r.to_html()
 ```
 
-### output
+### Output
 
-run this code, you can get the markdown file below:
+Run this code and you can get the markdown file below:
 
-+ rendered
-
-`<start>`
-
-### testtest
+#### testtest
 
 - あ
 - い
@@ -69,7 +67,7 @@ run this code, you can get the markdown file below:
   - 4
   - 5
 
-## sample
+#### sample
 |   |  a  |  b  |  c  |  d  |
 |---|----:|----:|----:|----:|
 |AB |   12|    2|    4|    3|
@@ -82,10 +80,10 @@ run this code, you can get the markdown file below:
 
 `<end>`
 
-+ raw markdown file
+### Raw 
 
 ```markdown
-### testtest
+#### testtest
 
 - あ
 - い
@@ -105,7 +103,7 @@ run this code, you can get the markdown file below:
   - 4
   - 5
 
-## sample
+#### sample
 |   |  a  |  b  |  c  |  d  |
 |---|----:|----:|----:|----:|
 |AB |   12|    2|    4|    3|
