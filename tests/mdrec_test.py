@@ -1,7 +1,7 @@
 import unittest
 from mdrec import MDRec
 import os
-from sample import ja_sample, nested_sample
+from sample import ja_sample, nested_sample, df_md_sample
 
 
 class MDRecTests(unittest.TestCase):
@@ -18,6 +18,11 @@ class MDRecTests(unittest.TestCase):
 
         res = r.rec([1,[1,2],[2,[3],4], [{"a": 100, "b": 234}], {"c" : [3,4,5]}])
         self.assertEqual(res, nested_sample)
+
+        from pandas import DataFrame
+        df = DataFrame([[12, 2, 4, 3], [3, 3, 3, 4]], columns=list("abcd"), index=["AB", "BB"])
+        res = r.rec(df, title="sample")
+        self.assertEqual(res, df_md_sample)
 
         res = r.link("../src/tes.png", text="testtest", img=False)
         self.assertEqual(res, "[testtest](../../src/tes.png)\n\n")
