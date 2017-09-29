@@ -63,7 +63,7 @@ class MDRec():
         return self._save(res)
 
     """convert markdown file to html"""
-    def export_html(self, *, render_inline=True, title=None):
+    def to_html(self, *, render_inline=True, title=None):
         if self.path is not None:
             return grip.export(self.path, title=title, render_inline=render_inline)
         else:

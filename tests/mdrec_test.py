@@ -26,7 +26,7 @@ class MDRecTests(unittest.TestCase):
         r = MDRec(save_file=save_file)
         r.img(src="./out/src/test01.png", title="test", alt="sample", ignore=True)
 
-        r.export_html()
+        r.to_html()
 
         self.assertTrue(os.path.exists("./out/test_img.html"))
 
