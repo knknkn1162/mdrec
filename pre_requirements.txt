@@ -1,7 +1,0 @@
-jupyter
-matplotlib
-numpy
-pandas
-Flask
-pytablewriter
-grip
