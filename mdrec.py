@@ -42,8 +42,11 @@ class MDRec():
         return self._save(res)
 
     """insert image in markdown file"""
-    def img(self, src, *, alt=None, title=None, ignore=False, display=True):
-        res = self._save(component.img(src, md_file=self.path, alt=alt, title=title, ignore=ignore))
+    def img(self, src, *, text="", title=None, copy=True, ignore=False, display=False):
+        res = component.link(src=src, md_dir=self.path.parent,
+            text=text, img=True, title=title, copy=copy, ignore=ignore, new_line=True,
+        )
+
         self._display_md(res, display)
 
         return self._save(res)
@@ -56,8 +59,11 @@ class MDRec():
         return self._save(res)
 
     """generate link path"""
-    def link(self, text, path, *, newline=True, display=True):
-        res = component.link(text=text, path=path, newline=newline)
+    def link(self, src, *, text="", img=False, title=None, copy=True, ignore=False, new_line=True, display=True):
+        res = component.link(src=src, md_dir=self.path.parent,
+            text=text, img=img, title=title, copy=copy, ignore=ignore, new_line=new_line
+        )
+
         self._display_md(res, display)
 
         return self._save(res)
