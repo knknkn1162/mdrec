@@ -8,14 +8,13 @@ from IPython.display import display_markdown  # show とか、 record_md など�
 
 from collections.abc import Iterable
 import logging
-import uuid
 
 logger = logging.getLogger(__name__)
 
 
 class MDRec():
     def __init__(self, *, save_file=None, refresh=True):
-        self.path = Path(save_file) if save_file is not None else Path('./_cache_{}.md'.format(uuid.uuid4()))
+        self.path = Path(save_file) if save_file is not None else None
         self.refresh = refresh
         self.counter = 0
 
@@ -65,12 +64,16 @@ class MDRec():
 
     """convert markdown file to html"""
     def export_html(self, *, render_inline=True, title=None):
-        return grip.export(self.path, title=title, render_inline=render_inline)
+        if self.path is not None:
+            return grip.export(self.path, title=title, render_inline=render_inline)
+        else:
+            logging.warning("save_file is None")
 
     def _save(self, res):
         mode = "w" if (self.counter == 0 and self.refresh == True) else "a"
-        with self.path.open(mode=mode, encoding='utf8', errors='ignore') as f:
-            f.write(res)
+        if self.path is not None:
+            with self.path.open(mode=mode, encoding='utf8', errors='ignore') as f:
+                f.write(res)
         self.counter += 1
         return res
 
