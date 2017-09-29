@@ -1,9 +1,11 @@
 import pytablewriter, six
 from pandas import DataFrame, Series
 from pathlib import Path
+from os.path import relpath
 import shutil
-import yaml
+import yaml, mimetypes
 from collections.abc import Mapping
+from urllib.parse import urlsplit
 
 """draw horizontal line"""
 def line():
@@ -57,30 +59,39 @@ split prev or next sentence
 def _end(data):
     return data + "\n\n"
 
-"""generate markdown formatted img expression"""
-def img(src, md_file, *, alt=None, title=None, img_dir = "img", ignore=False):
-    src_path = Path(src) #img
+"""generate links or images on markdown"""
+def link(src, *, text="", img=True,  md_dir=".", title=None, copy = True, ignore=False, new_line=True):
 
-    # dst is on the src_dir
-    rel_img_dir = Path(img_dir)
-    md_path = Path(md_file)
+    # if path is url
+    if (urlsplit(src).netloc != ""):
+        link_path = src
+    else: # if local path
+        Path(md_dir).mkdir(exist_ok=True)
+        # judge image file or not
+        src_path = Path(src)
+        mimetypes.init()
+        image_flag = mimetypes.types_map[src_path.suffix].startswith("image")
 
-    dst_dir = md_path.parent / rel_img_dir
-    dst_path = dst_dir / src_path.name
-    md_path.parent.mkdir(exist_ok=True)
+        if (not img) or (not copy) or (not image_flag):
+            src_path = relpath(src_path, md_dir)
+            link_path = src_path
+        else:
+            copy_dir = "img"
+            src_dir = Path(md_dir) / copy_dir
+            src_path = src_dir / src_path.name
+            link_path = Path(copy_dir) / src_path.name
+            # copy file
+            src_dir.mkdir(exist_ok=True)
+            if (not Path.samefile(src_path.parent, Path(src).parent)) and (not ignore):
+                shutil.copyfile(str(src), str(src_path))
 
-    if src_path.exists() or (not ignore):
-        dst_dir.mkdir(exist_ok=True)
-        if not Path.samefile(src_path.parent, dst_path.parent):
-            shutil.copyfile(str(src_path), str(dst_path))
-    alt = alt or src_path.stem
-    title = title or src_path.stem
+    img_sign = "!" if img else ""
 
-    res = '''![{}]({} "{}")'''.format(alt, rel_img_dir / src_path.name, title)
-    return _end(res)
+    text = text or Path(src).name
+    if title is not None:
+        title = ''' "{}"'''.format(title)
+    else:
+        title=""
 
-
-"""generate link"""
-def link(text, path, *, newline=True):
-    res = '''[{}]({})'''.format(text, path)
-    return _end(res) if newline else res
+    res = '''{}[{}]({}{})'''.format(img_sign, text, link_path, title)
+    return _end(res) if new_line else res
