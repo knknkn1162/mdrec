@@ -16,6 +16,19 @@ class MDRec():
     def __init__(self, *, save_file=None, refresh=True):
         self.path = Path(save_file) if save_file is not None else None
         self.refresh = refresh
+        self._quote_level = 0
+
+    def increase_quote_level(self):
+        self._quote_level += 1
+
+    def decrease_quote_level(self):
+        self._quote_level = max(0, self._quote_level-1)
+
+    def reset_quote_level(self):
+        self._quote_level = 0
+
+    def generate_quote(self):
+        return ">"*self._quote_level + " "*(self._quote_level>0)
 
     """
     depending on type of data argument, change output.
@@ -30,13 +43,13 @@ class MDRec():
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             default_h = 2
             res += component.table(data, h=default_h, title=title)
-        elif isinstance(data, str):
-            res += component.heading(data, h=h)
-        elif isinstance(data, Iterable):  # except type of str
+        elif isinstance(data, Iterable) and (not isinstance(data, str)):  # except type of str
             res += component.enum(data)
         else:
             res += component.heading(data, h=h)
 
+        quote = self.generate_quote()
+        res = "".join([quote + line for line in res.splitlines(keepends=True)])
         self._display_md(res, display)
 
         return self._save(res)
