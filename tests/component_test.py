@@ -41,6 +41,13 @@ class ComponentTests(unittest.TestCase):
         res = component.link("./out/src/tes.png", text="testtest", md_dir=md_path.parent, img=False)
         self.assertEqual(res, "[testtest](src/tes.png)\n\n")
 
+    def test_link_with_nonewline(self):
+        md_file = "./out/test.md"
+        from pathlib import Path
+        md_path = Path(md_file)
+        res = component.link("./out/src/tes.png", text="testtest", md_dir=md_path.parent, img=False, new_line=False)
+        self.assertEqual(res, "[testtest](src/tes.png)")
+
 
     def test_img_default_mdpath(self):
         res = component.link("./out/src/test01.png", title="test_img", text="sample")
