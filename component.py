@@ -63,7 +63,8 @@ def _end(data):
     return data + "\n\n"
 
 """generate links or images on markdown"""
-def link(src, *, text="", img=True,  md_dir=".", title=None, copy = True, ignore=False, new_line=True):
+def link(src, *, text="", img=True,
+         md_dir=".", title=None, copy = True, ignore=False, new_line=True, copy_sync=False):
 
     # if path is url
     if (urlsplit(src).netloc != ""):
@@ -86,7 +87,12 @@ def link(src, *, text="", img=True,  md_dir=".", title=None, copy = True, ignore
             # copy file
             src_dir.mkdir(exist_ok=True)
             if (not Path.samefile(src_path.parent, Path(src).parent)) and (not ignore):
-                shutil.copyfile(str(src), str(src_path))
+                # copy file synchronously or not
+                if copy_sync:
+                    with open(str(src), 'rb') as f1, open(str(src_path), 'wb') as f2:
+                        shutil.copyfileobj(f1, f2)
+                else:
+                    shutil.copyfile(str(src), str(src_path))
 
     img_sign = "!" if img else ""
 
