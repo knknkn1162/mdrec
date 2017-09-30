@@ -37,7 +37,7 @@ class MDRec():
         str : as it is
         otherwise : to str
     """
-    def rec(self, data, *, h=None, title=None, display=True):
+    def rec(self, data, *, h=None, title=None, raw=True):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             default_h = h or 2
@@ -49,34 +49,42 @@ class MDRec():
 
         quote = self.generate_quote()
         res = "".join([quote + line for line in res.splitlines(keepends=True)])
-        self._display_md(res, display)
+
+        display_markdown(res, raw=raw)
 
         return self._save(res)
 
     """insert image in markdown file"""
-    def img(self, src, *, text="", title=None, copy=True, ignore=False, display=False):
+    def img(self, src, *, text="", title=None, copy=True, ignore=False, raw=True):
         res = component.link(src=src, md_dir=self.path.parent,
             text=text, img=True, title=title, copy=copy, ignore=ignore, new_line=True,
         )
+        if raw:
+            display_res = component.link(src=src, md_dir=".",
+                text=text, title=title, copy=copy, ignore=ignore
+            )
 
-        self._display_md(res, display)
+            display_markdown(display_res, raw=raw)
 
         return self._save(res)
 
     """write horizontal line in the save_file"""
-    def line(self, display=True):
+    def line(self, raw=True):
         res = component.line()
-        self._display_md(res, display)
+        display_markdown(res, raw=raw)
 
         return self._save(res)
 
     """generate link path"""
-    def link(self, src, *, text="", img=False, title=None, copy=True, ignore=False, new_line=True, display=True):
+    def link(self, src, *, text="", img=False, title=None, copy=True, ignore=False, new_line=True, raw=True):
         res = component.link(src=src, md_dir=self.path.parent,
             text=text, img=img, title=title, copy=copy, ignore=ignore, new_line=new_line
         )
-
-        self._display_md(res, display)
+        if raw:
+            display_res = component.link(src=src, md_dir=".",
+                text=text, img=img, title=title, copy=copy, ignore=ignore, new_line=new_line
+            )
+            display_markdown(display_res, raw=raw)
 
         return self._save(res)
 
@@ -94,9 +102,4 @@ class MDRec():
                 f.write(res)
         self.refresh = False
         return res
-
-    @staticmethod
-    def _display_md(data, display):
-        if display:
-            display_markdown(data, raw=True)
 
