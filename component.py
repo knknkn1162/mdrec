@@ -7,6 +7,9 @@ import yaml, mimetypes
 from collections.abc import Mapping
 from urllib.parse import urlsplit
 
+import logging
+logger = logging.getLogger(__name__)
+
 """draw horizontal line"""
 def line():
     return _end("---")
