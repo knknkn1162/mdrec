@@ -41,11 +41,26 @@ class ComponentTests(unittest.TestCase):
         res = component.link("./out/src/tes.png", text="testtest", md_dir=md_path.parent, img=False)
         self.assertEqual(res, "[testtest](src/tes.png)\n\n")
 
+    def test_link_with_nonewline(self):
+        md_file = "./out/test.md"
+        from pathlib import Path
+        md_path = Path(md_file)
+        res = component.link("./out/src/tes.png", text="testtest", md_dir=md_path.parent, img=False, new_line=False)
+        self.assertEqual(res, "[testtest](src/tes.png)")
+
 
     def test_img_default_mdpath(self):
         res = component.link("./out/src/test01.png", title="test_img", text="sample")
         # Note that this writes file in the save_file path
         self.assertEqual(res, '''![sample](img/test01.png "test_img")\n\n''')
+
+    def test_img_with_mddir(self):
+        md_file = "./out/test_img.md"
+        from pathlib import Path
+        md_path = Path(md_file)
+
+        res = component.link("../test02.png", md_dir=md_path.parent, ignore=True)
+        self.assertEqual(res, '''![test02.png](img/test02.png)\n\n''')
 
     def test_img_custom_mdpath(self):
         md_file = "./out/test.md"
@@ -56,14 +71,15 @@ class ComponentTests(unittest.TestCase):
         # Note that this writes file in the save_file path
         self.assertEqual(res, '''![sample](img/test01.png "test_custom")\n\n''')
 
-
-    def test_img(self):
-        md_file = "./out/test_img.md"
+    def test_img_without_copy(self):
+        md_file = "./out/test.md"
         from pathlib import Path
         md_path = Path(md_file)
 
-        res = component.link("../test02.png", md_dir=md_path.parent, ignore=True)
-        self.assertEqual(res, '''![test02.png](img/test02.png)\n\n''')
+        # not copying png file to ./out/img dir.
+        res = component.link("./out/src/tes.png", text="sample", title="test_custom", md_dir=md_path.parent, copy=False)
+        # Note that this writes file in the save_file path
+        self.assertEqual(res, '''![sample](src/tes.png "test_custom")\n\n''')
 
     def test_table(self):
         from pandas import DataFrame
