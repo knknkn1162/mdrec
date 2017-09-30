@@ -4,8 +4,7 @@ import component
 from pandas import DataFrame, Series
 from pathlib import Path
 
-from IPython.display import display_markdown  # show とか、 record_md など使える
-
+from IPython.display import display_markdown
 from collections.abc import Iterable
 import logging
 
@@ -41,7 +40,7 @@ class MDRec():
     def rec(self, data, *, h=None, title=None, display=True):
         res = ""
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
-            default_h = 2
+            default_h = h or 2
             res += component.table(data, h=default_h, title=title)
         elif isinstance(data, Iterable) and (not isinstance(data, str)):  # except type of str
             res += component.enum(data)
