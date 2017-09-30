@@ -4,8 +4,7 @@ import component
 from pandas import DataFrame, Series
 from pathlib import Path
 
-from IPython.display import display_markdown  # show とか、 record_md など使える
-
+from IPython.display import display_markdown
 from collections.abc import Iterable
 import logging
 
