@@ -39,7 +39,7 @@ r.line()
 # support ja
 r.rec(["あ", "い", "う", {"え" : "お"}])
 
-# draw vertical line explicitly
+# you should draw a vertical line explicitly
 r.line()
 
 # support nested list, dict or Iterable. 
