@@ -61,7 +61,7 @@ class MDRec():
         )
         if raw:
             display_res = component.link(src=src, md_dir=".",
-                text=text, title=title, copy=copy, ignore=ignore
+                text=text, title=title, copy=False, ignore=True
             )
 
             display_markdown(display_res, raw=raw)
@@ -82,7 +82,7 @@ class MDRec():
         )
         if raw:
             display_res = component.link(src=src, md_dir=".",
-                text=text, img=img, title=title, copy=copy, ignore=ignore, new_line=new_line
+                text=text, img=img, title=title, copy=False, ignore=True, new_line=new_line
             )
             display_markdown(display_res, raw=raw)
 
