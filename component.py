@@ -14,7 +14,7 @@ def line():
 """
 return text including h tag
 """
-def heading(data, h):
+def header(data, h):
     hmapping = ["#" * i + " " * (i > 0) for i in range(7)]
     res = "{}{}".format(hmapping[h or 0], str(data))
     return _end(res)
