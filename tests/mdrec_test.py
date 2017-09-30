@@ -10,7 +10,8 @@ class MDRecTests(unittest.TestCase):
         save_file = "./out/test_txt.md"
         r = MDRec(save_file=save_file)
 
-        res = r.rec("testtest", h=3, display=False)
+        # The option raw=False suppresses markdown display in jupyter notebook
+        res = r.rec("testtest", h=3, raw=False)
         self.assertEqual(res, "### testtest\n\n")
 
         res = r.rec(["あ", "い", "う", {"え" : "お"}])
