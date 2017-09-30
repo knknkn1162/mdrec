@@ -43,13 +43,13 @@ class MDRec():
         if any(list(map(lambda t: isinstance(data, t), [DataFrame, Series]))):
             default_h = 2
             res += component.table(data, h=default_h, title=title)
-        elif isinstance(data, str):
-            res += component.heading(data, h=h)
-        elif isinstance(data, Iterable):  # except type of str
+        elif isinstance(data, Iterable) and (not isinstance(data, str)):  # except type of str
             res += component.enum(data)
         else:
             res += component.heading(data, h=h)
 
+        quote = self.generate_quote()
+        res = "".join([quote + line for line in res.splitlines(keepends=True)])
         self._display_md(res, display)
 
         return self._save(res)
