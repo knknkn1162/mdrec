@@ -44,5 +44,21 @@ class MDRecTests(unittest.TestCase):
         self.assertTrue(os.path.exists("./out/test_img.html"))
 
 
+    def test_quote(self):
+        r = MDRec(save_file="tt.md")
+        r.increase_quote_level()
+        res = r.rec("testtest", h=2)
+        self.assertEqual(res, "> ## testtest\n> \n")
+
+        r.increase_quote_level()
+        res = r.rec(list("abc"))
+        self.assertEqual(res, ">> - a\n>> - b\n>> - c\n>> \n")
+
+        r.reset_quote_level()
+        res = r.rec(list("abcd"))
+        self.assertEqual(res, "- a\n- b\n- c\n- d\n\n")
+
+        r.to_html()
+
 if __name__ == "__main__":
     unittest.main()
