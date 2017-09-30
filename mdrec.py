@@ -6,8 +6,8 @@ from pathlib import Path
 
 from IPython.display import display_markdown
 from collections.abc import Iterable
-import logging
 
+import logging
 logger = logging.getLogger(__name__)
 
 
