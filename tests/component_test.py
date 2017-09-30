@@ -1,6 +1,7 @@
 import component
 import unittest
 from sample import df_md_sample, nested_sample, ja_sample
+from pathlib import Path
 
 
 class ComponentTests(unittest.TestCase):
@@ -36,14 +37,12 @@ class ComponentTests(unittest.TestCase):
 
     def test_static_link(self):
         md_file = "./out/test.md"
-        from pathlib import Path
         md_path = Path(md_file)
         res = component.link("./out/src/tes.png", text="testtest", md_dir=md_path.parent, img=False)
         self.assertEqual(res, "[testtest](src/tes.png)\n\n")
 
     def test_link_with_nonewline(self):
         md_file = "./out/test.md"
-        from pathlib import Path
         md_path = Path(md_file)
         res = component.link("./out/src/tes.png", text="testtest", md_dir=md_path.parent, img=False, new_line=False)
         self.assertEqual(res, "[testtest](src/tes.png)")
@@ -56,7 +55,6 @@ class ComponentTests(unittest.TestCase):
 
     def test_img_with_mddir(self):
         md_file = "./out/test_img.md"
-        from pathlib import Path
         md_path = Path(md_file)
 
         res = component.link("../test02.png", md_dir=md_path.parent, ignore=True)
@@ -64,7 +62,6 @@ class ComponentTests(unittest.TestCase):
 
     def test_img_custom_mdpath(self):
         md_file = "./out/test.md"
-        from pathlib import Path
         md_path = Path(md_file)
 
         res = component.link("./out/src/test01.png", text="sample", title="test_custom", md_dir=md_path.parent)
@@ -73,7 +70,6 @@ class ComponentTests(unittest.TestCase):
 
     def test_img_without_copy(self):
         md_file = "./out/test.md"
-        from pathlib import Path
         md_path = Path(md_file)
 
         # not copying png file to ./out/img dir.
