@@ -25,7 +25,7 @@ class MDRecTests(unittest.TestCase):
         res = r.rec(df, title="sample")
         self.assertEqual(res, df_md_sample)
 
-        res = r.link("../src/tes.png", text="testtest", img=False)
+        res = r.link("../src/tes.png", text="testtest")
         self.assertEqual(res, "[testtest](../../src/tes.png)\n\n")
 
         self.assertTrue(os.path.exists(save_file))
