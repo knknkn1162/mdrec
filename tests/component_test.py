@@ -73,7 +73,3 @@ class ComponentTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-
-
-##    #res = link("./tests/out/src/tes.png", md_dir = "out", img=True) # ![tes.png](img/tes.png)
-# res = link("./tests/out/src/tes.png", md_dir= "out", img=False) # [tes.png](../tests/out/src/tes.png)
