@@ -16,7 +16,6 @@ class MDRec():
     def __init__(self, *, save_file=None, refresh=True):
         self.path = Path(save_file) if save_file is not None else None
         self.refresh = refresh
-        self.counter = 0
 
     """
     depending on type of data argument, change output.
@@ -77,11 +76,11 @@ class MDRec():
             logging.warning("save_file is None")
 
     def _save(self, res):
-        mode = "w" if (self.counter == 0 and self.refresh == True) else "a"
+        mode = "w" if self.refresh else "a"
         if self.path is not None:
             with self.path.open(mode=mode, encoding='utf8', errors='ignore') as f:
                 f.write(res)
-        self.counter += 1
+        self.refresh = False
         return res
 
     @staticmethod
