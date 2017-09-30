@@ -27,6 +27,7 @@ class MDRecTests(unittest.TestCase):
         res = r.link("../src/tes.png", text="testtest", img=False)
         self.assertEqual(res, "[testtest](../../src/tes.png)\n\n")
 
+        self.assertTrue(os.path.exists(save_file))
 
     def test_img(self):
         save_file = "./out/test_img.md"
