@@ -6,7 +6,7 @@ from sample import df_md_sample, nested_sample, ja_sample
 class ComponentTests(unittest.TestCase):
 
     def test_hedding(self):
-        res = component.heading("test", h=2)
+        res = component.header("test", h=2)
         self.assertEqual(res, "## test\n\n")
 
     def test_enum_ja(self):

@@ -45,7 +45,7 @@ class MDRec():
         elif isinstance(data, Iterable) and (not isinstance(data, str)):  # except type of str
             res += component.enum(data)
         else:
-            res += component.heading(data, h=h)
+            res += component.header(data, h=h)
 
         quote = self.generate_quote()
         res = "".join([quote + line for line in res.splitlines(keepends=True)])
