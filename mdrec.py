@@ -16,6 +16,19 @@ class MDRec():
     def __init__(self, *, save_file=None, refresh=True):
         self.path = Path(save_file) if save_file is not None else None
         self.refresh = refresh
+        self._quote_level = 0
+
+    def increase_quote_level(self):
+        self._quote_level += 1
+
+    def decrease_quote_level(self):
+        self._quote_level = max(0, self._quote_level-1)
+
+    def reset_quote_level(self):
+        self._quote_level = 0
+
+    def generate_quote(self):
+        return ">"*self._quote_level + " "*(self._quote_level>0)
 
     """
     depending on type of data argument, change output.
