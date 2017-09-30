@@ -76,13 +76,13 @@ class MDRec():
         return self._save(res)
 
     """generate link path"""
-    def link(self, src, *, text="", img=False, title=None, copy=True, ignore=False, new_line=True, raw=True):
+    def link(self, src, *, text="", title=None, copy=True, ignore=False, new_line=True, raw=True):
         res = component.link(src=src, md_dir=self.path.parent,
-            text=text, img=img, title=title, copy=copy, ignore=ignore, new_line=new_line
+            text=text, img=False, title=title, copy=copy, ignore=ignore, new_line=new_line
         )
         if raw:
             display_res = component.link(src=src, md_dir=".",
-                text=text, img=img, title=title, copy=False, ignore=True, new_line=new_line
+                text=text, img=False, title=title, copy=False, ignore=True, new_line=new_line
             )
             display_markdown(display_res, raw=raw)
 
