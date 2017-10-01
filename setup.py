@@ -12,7 +12,7 @@ with open("README.md") as f:
     long_description = f.read()
 
 setup(name='mdrec',
-      version='0.1',
+      version='0.1.1',
       description='record python object to markdown file & convert to html.',
       long_description=long_description,
       classifiers=[
