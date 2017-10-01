@@ -1,6 +1,6 @@
 import grip
 
-import component
+from . import component
 from pandas import DataFrame, Series
 from pathlib import Path
 
