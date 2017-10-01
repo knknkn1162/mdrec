@@ -8,7 +8,7 @@ You can also convert this to html file at once.
 + this library is under development..
 
 ```bash
-pip install -e git+ssh://git@github.com/knknkn1162/mdrec.git@dev_seed#egg=mdrec-0.1dev
+pip install mdrec
 ```
 
 ## Example
@@ -178,7 +178,7 @@ this is example below
 
 ## Usage
 
-+ By default, results are also displayed in jupyter notebook, so if you switch off the option, let `r.rec(obj, display_notebook=False)`.
++ By default, results are also displayed in jupyter notebook, so if you switch off the option, let `r.rec(obj, raw=False)`.
 
 ## Configuration
 
