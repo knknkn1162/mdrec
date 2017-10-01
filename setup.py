@@ -17,7 +17,7 @@ setup(name='mdrec',
       long_description=long_description,
       classifiers=[
           "Programming Language :: Python :: 3 :: Only",
-          "Framework:: IPython",
+          "Framework :: IPython",
       ],
       packages=find_packages(exclude=["tests"]),
       url="https://github.com/knknkn1162/mdrec",
