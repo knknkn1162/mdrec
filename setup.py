@@ -10,10 +10,15 @@ install_requires = [
 
 setup(name='mdrec',
       version='0.1dev',
-      description='record python object in markdown file & convert to html.',
-      packages=find_packages("mdrec"),
+      description='record python object to markdown file & convert to html.',
+      classifiers=[
+          "Programming Language :: Python :: 3 :: Only",
+          "Framework:: IPython",
+      ],
+      packages=find_packages(exclude=["tests"]),
       include_package_data=True,
       zip_safe=False,
+      test_suite="tests",
       install_requires=install_requires,
       entry_points="""
 """)
