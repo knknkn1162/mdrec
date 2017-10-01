@@ -1,4 +1,4 @@
-import component
+from mdrec import component
 import unittest
 from sample import df_md_sample, nested_sample, ja_sample
 from pathlib import Path
