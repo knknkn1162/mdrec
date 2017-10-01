@@ -1,11 +1,13 @@
 # MDRec : Markdown Recorder from python
 
+[![Current version on PyPI](http://img.shields.io/pypi/v/mdrec.svg)](PyPI)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+
 MDRec creates markdown file easily from python object.
 You can also convert this to html file at once.
 
-## Installation
 
-+ this library is under development..
+## Installation
 
 ```bash
 pip install mdrec
